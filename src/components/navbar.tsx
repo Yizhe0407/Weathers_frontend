@@ -12,7 +12,7 @@ export default function Navbar() {
     return (
         <div className='flex justify-between items-center w-full bg-sky-500 py-2 px-8'>
             <h1 className='text-2xl'>
-                <Link href="/">Weathers</Link>
+                <Link href="/">SkyNet</Link>
             </h1>
             <div>
                 <SignedOut>
