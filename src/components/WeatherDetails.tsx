@@ -8,10 +8,6 @@ interface Props {
 }
 
 const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
-  if (!weatherData || weatherData.length === 0) {
-    return <p>No weather data available.</p>;
-  }
-
   const formatWeatherData = (data: WeatherData) => {
     const [date, timeWithSeconds] = data.startTime.split(" "); // Split date and time with seconds
     const time = timeWithSeconds.slice(0, 5); // Remove the seconds from time (12:00:00 -> 12:00)
@@ -34,6 +30,10 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
       windDirection, // Getting only the wind direction
     };
   };
+
+  if (!weatherData || weatherData.length === 0) {
+    return <p className="text-center mt-4">目前無天氣資料。</p>; // Display message when no data
+  }
 
   return (
     <div className="flex flex-wrap justify-center mt-4 p-4 gap-4">
@@ -70,7 +70,6 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
               </div>
             </div>
           </div>
-
         );
       })}
     </div>
