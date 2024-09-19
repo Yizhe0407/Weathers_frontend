@@ -11,7 +11,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-// import Choose from "@/components/Choose";
+import Choose from "@/components/Choose";
 
 export default function Page() {
     const { isSignedIn } = useAuth();
@@ -34,7 +34,7 @@ export default function Page() {
                     <DialogHeader>
                         <DialogTitle>Select place</DialogTitle>
                     </DialogHeader>
-                    {/* <Choose /> */}
+                    <Choose />
                 </DialogContent>
             </Dialog>
         </div>

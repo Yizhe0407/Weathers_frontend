@@ -9,20 +9,24 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { countyApiUrls, countiesWithTowns } from "@/lib/countyApiUrls";
 
 export default function Choose() {
-
     const [county, setCounty] = useState<string>("");
     const [town, setTown] = useState<string>("");
-    const [loading, setLoading] = useState(false);
+
+    console.log(countyApiUrls, town);
 
     const handleCountyChange = (county: string) => {
         setCounty(county);
         setTown(""); // Reset town when county changes
     };
 
+    const handleClick = () => {
+        // This is a no-op function for now
+        console.log("Button clicked");
+    };
 
     return (
         <div className="flex flex-wrap justify-center items-center gap-4">
@@ -85,8 +89,10 @@ export default function Choose() {
                     )}
                 </Select>
             </div>
-            
-            <Button variant="outline" className="w-32">確認</Button>
+
+            <Button variant="outline" className="w-32" onClick={handleClick}>
+                確認
+            </Button>
         </div>
     );
 }
