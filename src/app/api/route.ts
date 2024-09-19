@@ -1,20 +1,19 @@
+// src/app/api/route.ts
 import { NextResponse } from "next/server";
-import axios from "axios";
 
 const API_KEY = "CWA-B16733A9-E5D3-432C-8C3B-32A5A302D6E5";
 
-// Define the types for the response structure
-interface ElementValue {
+interface WeatherElementValue {
   value: string;
 }
 
-interface Time {
+interface WeatherElementTime {
   startTime: string;
-  elementValue: ElementValue[];
+  elementValue: WeatherElementValue[];
 }
 
 interface WeatherElement {
-  time: Time[];
+  time: WeatherElementTime[];
 }
 
 interface Location {
@@ -25,12 +24,10 @@ interface Locations {
   location: Location[];
 }
 
-interface Records {
-  locations: Locations[];
-}
-
-interface WeatherResponse {
-  records: Records;
+interface WeatherApiResponse {
+  records: {
+    locations: Locations[];
+  };
 }
 
 export async function POST(req: Request) {
@@ -44,21 +41,24 @@ export async function POST(req: Request) {
       });
     }
 
-    const { data } = await axios.get<WeatherResponse>(apiUrl, {
-      params: {
-        Authorization: API_KEY,
-        locationName: town,
-        elementName: "WeatherDescription",
-      },
-      headers: {
-        accept: "application/json",
-      },
-    });
+    const response = await fetch(
+      `${apiUrl}?Authorization=${API_KEY}&locationName=${town}&elementName=WeatherDescription`,
+      {
+        headers: {
+          accept: "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch weather data");
+    }
+
+    const data: WeatherApiResponse = await response.json();
 
     const weatherElement = data.records.locations[0].location[0].weatherElement[0];
 
-    // Extract startTime and value from elementValue
-    const filteredData = weatherElement.time.map((item: Time) => ({
+    const filteredData = weatherElement.time.map((item: WeatherElementTime) => ({
       startTime: item.startTime,
       value: item.elementValue[0].value,
     }));

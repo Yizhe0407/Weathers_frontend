@@ -1,6 +1,6 @@
 // app/page.tsx
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import {
@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button"
 import { countyApiUrls, countiesWithTowns } from "@/lib/countyApiUrls";
 import WeatherDetails from "@/components/WeatherDetails";
 
@@ -25,16 +26,9 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
 
-  // Ensure router is ready before checking authentication
-  useEffect(() => {
-    if (isSignedIn) {
-      router.push("/dashboard"); // Redirect to dashboard if signed in
-    }
-  }, [isSignedIn, router]); // Added `router` to the dependency array
-
   const handleCountyChange = (county: string) => {
     setCounty(county);
-    setTown(""); // Reset town when county changes
+    setTown(""); 
   };
 
   const fetchWeather = async () => {
@@ -74,6 +68,11 @@ export default function Page() {
 
   return (
     <div className="flex flex-col items-center p-4">
+      {isSignedIn && (
+        <Button variant="outline" className="mb-4" onClick={() => router.push("/dashboard")}>
+          Dashboard
+        </Button>
+      )}
       <div className="flex flex-col md:flex-row justify-center gap-4">
         <div className="w-[325px] md:w-32">
           <Select onValueChange={handleCountyChange}>
