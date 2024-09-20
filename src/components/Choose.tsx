@@ -10,9 +10,11 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/nextjs";
 import { countyApiUrls, countiesWithTowns } from "@/lib/countyApiUrls";
 
 export default function Choose() {
+    const { user } = useUser();
     const [county, setCounty] = useState<string>("");
     const [town, setTown] = useState<string>("");
 
@@ -23,9 +25,39 @@ export default function Choose() {
         setTown(""); // Reset town when county changes
     };
 
-    const handleClick = () => {
-        // This is a no-op function for now
-        console.log("Button clicked");
+    if (!user) return null;
+
+    const handleClick = async () => {
+
+        const username = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim();
+
+        const userData = {
+            username,
+            emailAddress: user.emailAddresses[0].emailAddress,
+            county,
+            town,
+        };
+        
+        console.log(userData);
+
+        // Send the data to the backend via a POST request
+        try {
+            const response = await fetch("/api/saveUserLocation", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData),
+            });
+
+            if (response.ok) {
+                console.log("Data saved successfully");
+            } else {
+                console.error("Failed to save data");
+            }
+        } catch (error) {
+            console.error("Error while saving data:", error);
+        }
     };
 
     return (
