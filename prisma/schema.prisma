@@ -4,8 +4,6 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-// schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -16,27 +14,28 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-// model User {
-//   id            Int       @id @default(autoincrement())
-//   externalId    String    @unique
-//   username      String    @unique
-//   email_address String?   @unique
-//   has_image     Boolean   @default(false)
-//   image_url     String?
+model User {
+  id            Int       @id @default(autoincrement())
+  username      String    @unique
+  email_address String?   @unique
 
-//   createdAt     DateTime  @default(now())
-//   updatedAt     DateTime  @updatedAt
+  county        County?   @relation(name: "CountyToUser", fields: [countyId], references: [id])
+  countyId      Int?      @unique  
+}
 
-//   // 新增 Location 關聯 (一對一，locationId 需唯一)
-//   location      Location? @relation(name: "LocationToUser", fields: [locationId], references: [id])
-//   locationId    Int?      @unique  // 外鍵，並且唯一
-// }
+model County {
+  id     Int       @id @default(autoincrement())
+  name   String   
 
-// model Location {
-//   id        Int    @id @default(autoincrement()) // Location 主鍵
-//   county    String // 縣/州
-//   town      String // 城鎮
-  
-//   // 與 User 一對一關聯
-//   user      User?  @relation(name: "LocationToUser")
-// }
+  user   User?     @relation(name: "CountyToUser")
+
+  towns  Town[]
+}
+
+model Town {
+  id      Int      @id @default(autoincrement())
+  name    String
+
+  county  County   @relation(fields: [countyId], references: [id])
+  countyId Int
+}
