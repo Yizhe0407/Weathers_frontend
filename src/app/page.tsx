@@ -41,7 +41,7 @@ export default function Page() {
     setError("");
 
     try {
-      const response = await fetch("/api/weather", {
+      const response = await fetch("https://weathers-backend.vercel.app/api/weather", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

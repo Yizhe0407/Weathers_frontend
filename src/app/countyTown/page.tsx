@@ -18,7 +18,7 @@ export default function CountyTownPage() {
 
             const fetchWeatherData = async () => {
                 try {
-                    const response = await fetch("/api/weather", {
+                    const response = await fetch("https://weathers-backend.vercel.app/api/weather", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

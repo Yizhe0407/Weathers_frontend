@@ -43,7 +43,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
 
         // Send the data to the backend via a POST request
         try {
-            const response = await fetch("/api/add", {
+            const response = await fetch("https://weathers-backend.vercel.app/api/add", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

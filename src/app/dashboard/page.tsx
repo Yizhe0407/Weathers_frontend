@@ -40,7 +40,7 @@ export default function Page() {
     // 使用 useCallback 來記住 fetchUserCounties，當 email 改變時，函數會被更新
     const fetchUserCounties = useCallback(async () => {
         try {
-            const response = await fetch(`/api/data?email=${email}`, {
+            const response = await fetch(`https://weathers-backend.vercel.app/api/data?email=${email}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

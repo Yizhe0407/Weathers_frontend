@@ -36,7 +36,7 @@ export default function LocationSelect() {
     setError("");
 
     try {
-      const response = await fetch("/api", {
+      const response = await fetch("https://weathers-backend.vercel.app/api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
