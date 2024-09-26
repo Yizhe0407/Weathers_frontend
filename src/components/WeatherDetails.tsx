@@ -36,13 +36,13 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
   }
 
   return (
-    <div className="flex flex-wrap justify-center mt-4 p-4 gap-4">
+    <div className="flex flex-wrap justify-center mt-4 p-4 gap-4 h-screen">
       {weatherData.map((data) => {
         const { date, time, weather, rainPercent, temperature, comfort, windDirection } =
           formatWeatherData(data);
 
         return (
-          <div className="p-4 w-[325px] border rounded-lg" key={data.startTime}>
+          <div className="p-4 w-[325px] border bg-[#FFF2E1] border-none rounded-lg" key={data.startTime}>
             <div className="flex flex-col flex-wrap gap-4">
               <div className="flex justify-between">
                 <p className="w-full">{`${date} ${time}`}</p>

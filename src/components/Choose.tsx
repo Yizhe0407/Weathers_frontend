@@ -66,7 +66,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
 
     return (
         <div className="flex flex-wrap justify-center items-center gap-4">
-            <div className="w-32">
+            <div className="w-32 bg-[#FFF2E1] border-none rounded-lg">
                 <Select onValueChange={handleCountyChange}>
                     <SelectTrigger>
                         <SelectValue placeholder="選擇縣市" />
@@ -95,7 +95,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
                 </Select>
             </div>
 
-            <div className="w-32">
+            <div className="w-32 bg-[#FFF2E1] border-none rounded-lg">
                 <Select onValueChange={setTown} disabled={!county}>
                     <SelectTrigger>
                         <SelectValue placeholder={county ? "選擇鄉鎮" : "請先選擇縣市"} />
@@ -114,7 +114,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
 
             <Button 
                 variant="outline" 
-                className="w-32" 
+                className="bg-[#A79277] hover:bg-[#EAD8C0] text-white border-none w-32" 
                 onClick={handleClick} 
                 disabled={loading}  // 當 loading 為 true 時按鈕無法點擊
             >

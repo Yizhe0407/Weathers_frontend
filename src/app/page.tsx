@@ -67,14 +67,14 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
+    <div className="flex flex-col items-center p-4 h-screen">
       {isSignedIn && (
-        <Button variant="outline" className="mb-4" onClick={() => router.push("/dashboard")}>
+        <Button variant="outline" className="mb-4 bg-[#A79277] border-none text-white hover:bg-[#EAD8C0]" onClick={() => router.push("/dashboard")}>
           Dashboard
         </Button>
       )}
       <div className="flex flex-col md:flex-row justify-center gap-4">
-        <div className="w-[325px] md:w-32">
+        <div className="w-[325px] md:w-32 bg-[#FFF2E1] border-none rounded-lg">
           <Select onValueChange={handleCountyChange}>
             <SelectTrigger>
               <SelectValue placeholder="選擇縣市" />
@@ -103,7 +103,7 @@ export default function Page() {
           </Select>
         </div>
 
-        <div className="w-[325px] md:w-32">
+        <div className="w-[325px] md:w-32 bg-[#FFF2E1] border-none rounded-lg">
           <Select onValueChange={setTown} disabled={!county}>
             <SelectTrigger>
               <SelectValue placeholder={county ? "選擇鄉鎮" : "請先選擇縣市"} />
@@ -120,13 +120,14 @@ export default function Page() {
           </Select>
         </div>
 
-        <button
+        <Button
+          variant="outline"
           onClick={fetchWeather}
-          className="bg-blue-500 text-white px-3 py-2 rounded w-[325px] md:w-32"
+          className="bg-[#A79277] hover:bg-[#EAD8C0] text-white border-none px-3 py-2 rounded w-[325px] md:w-32"
           disabled={loading}
         >
           {loading ? "Loading..." : "確定"}
-        </button>
+        </Button>
       </div>
 
       {error && <p className="text-red-500">{error}</p>}

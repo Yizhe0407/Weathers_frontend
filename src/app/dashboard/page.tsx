@@ -81,11 +81,11 @@ export default function Page() {
         <div className="p-4">
             <Dialog open={open} onOpenChange={setOpen}> {/* 控制 Dialog 的開關 */}
                 <DialogTrigger asChild>
-                    <Button variant="outline" onClick={() => setOpen(true)}>
+                    <Button variant="outline" className="bg-[#A79277] border-none text-white hover:bg-[#EAD8C0]" onClick={() => setOpen(true)}>
                         Add
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] w-64 rounded-lg">
+                <DialogContent className="sm:max-w-[425px] w-64 bg-[#D1BB9E] border-none rounded-lg">
                     <DialogHeader>
                         <DialogTitle>Select place</DialogTitle>
                     </DialogHeader>

@@ -17,7 +17,7 @@ export default function CountyTownItem({ county, town }: CountyTownItemProps) {
     };
 
     return (
-        <div onClick={handleClick} className="border p-4 rounded-lg cursor-pointer w-40">
+        <div onClick={handleClick} className=" bg-[#FFF2E1] border-none p-4 rounded-lg cursor-pointer w-40">
             <h3 className="font-semibold">County: {county}</h3>
             <p>Town: {town}</p>
         </div>
