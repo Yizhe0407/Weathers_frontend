@@ -85,7 +85,7 @@ export default function Page() {
                         新增
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] w-64 bg-[#D1BB9E] border-none rounded-lg">
+                <DialogContent className="sm:max-w-[425px] w-64 bg-[#D1BB9E] border-none rounded-lg" style={{ top: '30%' }}>
                     <DialogHeader>
                         <DialogTitle>選擇地區</DialogTitle>
                     </DialogHeader>
