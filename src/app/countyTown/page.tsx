@@ -8,11 +8,11 @@ export default function CountyTownPage() {
     const searchParams = useSearchParams();
     const county = searchParams.get("county");
     const town = searchParams.get("town");
-    const [weatherData, setWeatherData] = useState(null); // 使用 useState 存储 weatherData
-    const [error, setError] = useState<string | null>(null); // 将 error 状态指定为 string 或 null
+    const [weatherData, setWeatherData] = useState(null); // 使用 useState 儲存 weatherData
+    const [error, setError] = useState<string | null>(null); // 將 error 狀態指定為 string 或 null
 
     useEffect(() => {
-        // 只有当 county 和 town 存在时才发起请求
+        // 只有當 county 和 town 存在時才發起請求
         if (county && town) {
             const apiUrl = countyApiUrls[county];
 
@@ -36,34 +36,33 @@ export default function CountyTownPage() {
                     const data = await response.json();
                     setWeatherData(data.weatherData); // 更新 weatherData
                 } catch (error) {
-                    // 显式处理 'unknown' 类型的 error
                     if (error instanceof Error) {
-                        setError(error.message); // 如果 error 是 Error 实例，获取错误消息
+                        setError(error.message); // 如果 error 是 Error 實例，取得錯誤訊息
                     } else {
-                        setError(String(error)); // 如果 error 是其他类型，强制转换为字符串
+                        setError(String(error)); // 如果 error 是其他類型，強制轉換為字串
                     }
                 }
             };
 
-            fetchWeatherData(); // 调用异步请求函数
+            fetchWeatherData(); // 呼叫非同步請求函數
         }
-    }, [county, town]); // useEffect 依赖 county 和 town
+    }, [county, town]); // useEffect 依賴 county 和 town
 
     if (!county || !town) {
         return <div>Error: County or Town not provided</div>;
     }
 
     if (error) {
-        return <div>Error: {error}</div>; // 显示错误信息
+        return <div>Error: {error}</div>; // 顯示錯誤訊息
     }
 
     if (!weatherData) {
-        return <div>Loading...</div>; // 显示加载状态
+        return <div className="p-4 text-center text-2xl animate-pulse">Loading...</div>
     }
 
     return (
         <div>
-            <WeatherDetails weatherData={weatherData} /> {/* 渲染天气详情组件 */}
+            <WeatherDetails weatherData={weatherData} />
         </div>
     );
 }

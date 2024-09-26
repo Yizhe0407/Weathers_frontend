@@ -73,7 +73,7 @@ export default function Page() {
     };
 
     if (loading) {
-        return <div>Loading...</div>; // 在資料加載過程中顯示 Loading
+        return <div className="p-4 text-center text-2xl animate-pulse">Loading...</div>; // 在資料加載過程中顯示 Loading
     }
 
     // 使用 CountyTownItem 來渲染每個縣市和鄉鎮
@@ -81,13 +81,13 @@ export default function Page() {
         <div className="p-4 flex flex-col items-center justify-center">
             <Dialog open={open} onOpenChange={setOpen}> {/* 控制 Dialog 的開關 */}
                 <DialogTrigger asChild>
-                    <Button variant="outline" className="bg-[#A79277] border-none text-white hover:bg-[#EAD8C0] w-full max-w-xl" onClick={() => setOpen(true)}>
-                        Add
+                    <Button variant="outline" className="bg-[#A79277] border-none text-white text-lg hover:bg-[#EAD8C0] w-full max-w-xl" onClick={() => setOpen(true)}>
+                        新增
                     </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] w-64 bg-[#D1BB9E] border-none rounded-lg">
                     <DialogHeader>
-                        <DialogTitle>Select place</DialogTitle>
+                        <DialogTitle>選擇地區</DialogTitle>
                     </DialogHeader>
                     <Choose onSuccess={handleDialogClose} /> {/* 將關閉 Dialog 的函數傳遞給 Choose 組件 */}
                 </DialogContent>

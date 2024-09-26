@@ -1,4 +1,4 @@
-// app/utils/countyApiUrls.ts
+// app/lib/countyApiUrls.ts
 
 // API URLs for each county
 export const countyApiUrls: { [key: string]: string } = {
@@ -24,7 +24,7 @@ export const countyApiUrls: { [key: string]: string } = {
 };
 
 // Towns for each county
-export const countiesWithTowns: { [key: string]: string[] } = {
+export const countyWithTowns: { [key: string]: string[] } = {
   '基隆市': ['中正區', '七堵區', '暖暖區', '仁愛區', '中山區', '安樂區', '信義區'],
   '臺北市': ['中正區', '大同區', '中山區', '萬華區', '信義區', '松山區', '大安區', '南港區', '北投區', '內湖區', '士林區', '文山區'],
   '新北市': ['板橋區', '新莊區', '泰山區', '林口區', '淡水區', '金山區', '八里區', '萬里區', '石門區', '三芝區', '瑞芳區', '汐止區', '平溪區', '貢寮區', '雙溪區', '深坑區', '石碇區', '新店區', '坪林區', '烏來區', '中和區', '永和區', '土城區', '三峽區', '樹林區', '鶯歌區', '三重區', '蘆洲區', '五股區'],
