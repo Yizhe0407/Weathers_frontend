@@ -78,10 +78,10 @@ export default function Page() {
 
     // 使用 CountyTownItem 來渲染每個縣市和鄉鎮
     return (
-        <div className="p-4">
+        <div className="p-4 flex flex-col items-center justify-center">
             <Dialog open={open} onOpenChange={setOpen}> {/* 控制 Dialog 的開關 */}
                 <DialogTrigger asChild>
-                    <Button variant="outline" className="bg-[#A79277] border-none text-white hover:bg-[#EAD8C0]" onClick={() => setOpen(true)}>
+                    <Button variant="outline" className="bg-[#A79277] border-none text-white hover:bg-[#EAD8C0] w-full max-w-xl" onClick={() => setOpen(true)}>
                         Add
                     </Button>
                 </DialogTrigger>
@@ -94,7 +94,7 @@ export default function Page() {
             </Dialog>
 
             {/* 使用 map 遍歷用戶的縣市和鄉鎮數據，分開顯示 */}
-            <div className="mt-4 grid grid-cols-1 gap-4">
+            <div className="mt-4 grid grid-cols gap-4 w-full max-w-xl">
                 {userCounties.map((county) => (
                     county.towns.map((town) => (
                         <CountyTownItem
