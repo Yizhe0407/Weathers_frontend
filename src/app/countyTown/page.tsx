@@ -8,15 +8,18 @@ export default function CountyTownPage() {
     const searchParams = useSearchParams();
     const county = searchParams.get("county");
     const town = searchParams.get("town");
-    const [weatherData, setWeatherData] = useState(null); // 使用 useState 儲存 weatherData
-    const [error, setError] = useState<string | null>(null); // 將 error 狀態指定為 string 或 null
+
+    const [weatherData, setWeatherData] = useState(null); // Store weather data
+    const [error, setError] = useState<string | null>(null); // Store any errors
+    const [loading, setLoading] = useState<boolean>(false); // Manage loading state
 
     useEffect(() => {
-        // 只有當 county 和 town 存在時才發起請求
+        // Fetch weather data only when both county and town are available
         if (county && town) {
-            const apiUrl = countyApiUrls[county];
+            const apiUrl = countyApiUrls[county]; // Get API URL based on county
 
             const fetchWeatherData = async () => {
+                setLoading(true); // Start loading before fetching the data
                 try {
                     const response = await fetch("https://weathers-backend.vercel.app/api/weather", {
                         method: "POST",
@@ -34,35 +37,47 @@ export default function CountyTownPage() {
                     }
 
                     const data = await response.json();
-                    setWeatherData(data.weatherData); // 更新 weatherData
+                    setWeatherData(data.weatherData); // Update weather data
+                    setError(null); // Clear any previous errors
                 } catch (error) {
                     if (error instanceof Error) {
-                        setError(error.message); // 如果 error 是 Error 實例，取得錯誤訊息
+                        setError(error.message); // Display error message if any
                     } else {
-                        setError(String(error)); // 如果 error 是其他類型，強制轉換為字串
+                        setError(String(error)); // Convert error to string if necessary
                     }
+                } finally {
+                    setLoading(false); // Stop loading once the fetch is complete
                 }
             };
 
-            fetchWeatherData(); // 呼叫非同步請求函數
+            fetchWeatherData(); // Call the fetch function
         }
-    }, [county, town]); // useEffect 依賴 county 和 town
+    }, [county, town]); // Re-fetch when county or town changes
 
+    // Case when county or town is missing
     if (!county || !town) {
         return <div>Error: County or Town not provided</div>;
     }
 
+    // Display error if exists
     if (error) {
-        return <div>Error: {error}</div>; // 顯示錯誤訊息
+        return <div>Error: {error}</div>;
     }
 
-    if (!weatherData) {
-        return <div className="p-4 text-center text-2xl animate-pulse">Loading...</div>
+    // Show loading spinner while fetching data
+    if (loading) {
+        return <div className="p-4 text-center text-2xl animate-pulse">Loading...</div>;
     }
 
-    return (
-        <div>
-            <WeatherDetails weatherData={weatherData} />
-        </div>
-    );
+    // Render weather data after successful fetch
+    if (weatherData) {
+        return (
+            <div>
+                <WeatherDetails weatherData={weatherData} />
+            </div>
+        );
+    }
+
+    // Default case: return null to prevent rendering until data is available
+    return null;
 }

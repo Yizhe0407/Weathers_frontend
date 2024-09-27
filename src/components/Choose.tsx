@@ -22,8 +22,6 @@ export default function Choose({ onSuccess }: ChooseProps) {
     const [loading, setLoading] = useState<boolean>(false);  // 新增 loading 狀態
     const countyNames: string[] = Object.keys(countyApiUrls);
 
-    console.log(countyApiUrls, town);
-
     const handleCountyChange = (county: string) => {
         setCounty(county);
         setTown(""); // Reset town when county changes
@@ -105,7 +103,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
                 onClick={handleClick}
                 disabled={loading}  // 當 loading 為 true 時按鈕無法點擊
             >
-                {loading ? "Loading..." : "確認"}  {/* 當 loading 為 true 時顯示 "Loading..." */}
+                {loading ? "Loading..." : "確認"}  
             </Button>
         </div>
     );

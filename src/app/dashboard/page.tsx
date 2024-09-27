@@ -48,6 +48,7 @@ export default function Page() {
             });
             if (response.ok) {
                 const data: County[] = await response.json(); // 明確指定返回資料的類型為 County 陣列
+                console.log(data);
                 setUserCounties(data); // 保存到 state
             } else {
                 console.error("Failed to fetch user counties");
@@ -85,7 +86,7 @@ export default function Page() {
                         新增
                     </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] w-64 bg-[#D1BB9E] border-none rounded-lg" style={{ top: '30%' }}>
+                <DialogContent className="sm:max-w-[425px] w-64 bg-[#D1BB9E] border-none rounded-lg" style={{ top: '35%' }}>
                     <DialogHeader>
                         <DialogTitle>選擇地區</DialogTitle>
                     </DialogHeader>
@@ -98,13 +99,16 @@ export default function Page() {
                 {userCounties.map((county) => (
                     county.towns.map((town) => (
                         <CountyTownItem
-                            key={`${county.id}-${town.id}`}
+                            key={`${county.county}-${town}`} // 使用 county 名称和 town 名称生成唯一的 key
                             county={county.county}
-                            town={town.town}
+                            town={town} 
                         />
                     ))
                 ))}
             </div>
+
+
+
         </div>
     );
 }
