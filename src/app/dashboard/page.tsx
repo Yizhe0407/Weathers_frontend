@@ -14,16 +14,10 @@ import {
 import Choose from "@/components/Choose";
 import CountyTownItem from "@/components/CountyTownItem";
 
-// 定義接口，為 userCounties、county 和 town 指定類型
-interface Town {
-    id: string;
-    town: string;
-}
-
 interface County {
     id: string;
     county: string;
-    towns: Town[];
+    towns: string[];
 }
 
 export default function Page() {
@@ -98,6 +92,7 @@ export default function Page() {
             <div className="mt-4 grid grid-cols gap-4 w-full max-w-xl">
                 {userCounties.map((county) => (
                     county.towns.map((town) => (
+                        console.log(county.county, town, typeof town),
                         <CountyTownItem
                             key={`${county.county}-${town}`} // 使用 county 名称和 town 名称生成唯一的 key
                             county={county.county}
