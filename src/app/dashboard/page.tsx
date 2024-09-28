@@ -11,6 +11,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { SquarePlus } from 'lucide-react';
 import Choose from "@/components/Choose";
 import CountyTownItem from "@/components/CountyTownItem";
 
@@ -72,12 +73,12 @@ export default function Page() {
 
     const handleDialogClose = () => {
         setOpen(false);
-    
+
         // 清除 localStorage 中的快取，強制更新數據
         if (email) {
             localStorage.removeItem(email); // 移除之前快取的數據
         }
-    
+
         fetchUserTowns(); // 重新從 API 獲取最新的數據
     };
 
@@ -89,8 +90,13 @@ export default function Page() {
         <div className="p-4 flex flex-col items-center justify-center">
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button variant="outline" className="bg-[#A79277] border-none text-white text-lg hover:bg-[#EAD8C0] w-full max-w-xl" onClick={() => setOpen(true)}>
-                        新增
+                    <Button
+                        variant="outline"
+                        className="bg-[#A79277] border-none text-white text-lg hover:bg-[#EAD8C0] w-full max-w-xl flex justify-center items-center space-x-2" // 使用 space-x-2 調整圖示與文本間距
+                        onClick={() => setOpen(true)}
+                    >
+                        <SquarePlus /> {/* 去除 margin，讓 flex 控制間距 */}
+                        <span>新增</span>
                     </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] w-64 bg-[#D1BB9E] border-none rounded-lg" style={{ top: '35%' }}>
