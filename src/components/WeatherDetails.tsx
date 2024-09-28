@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface WeatherData {
   startTime: string;
@@ -12,7 +13,7 @@ interface Props {
 
 const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
   // Default to "今天" being selected
-  const [selectedDays, setSelectedDays] = useState<string[]>(["今天"]);
+  const [selectedDay, setSelectedDay] = useState<string>("今天");
 
   const formatWeatherData = (data: WeatherData) => {
     const [date, timeWithSeconds] = data.startTime.split(" ");
@@ -33,14 +34,8 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
     };
   };
 
-  const handleCheckboxChange = (day: string) => {
-    setSelectedDays((prev) =>
-      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
-    );
-  };
-
   const filterWeatherData = () => {
-    if (!weatherData || selectedDays.length === 0) return weatherData;
+    if (!weatherData) return weatherData;
 
     const today = new Date().toISOString().split('T')[0];
     const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
@@ -52,9 +47,9 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
 
     return weatherData.filter((data) => {
       const dataDate = data.startTime.split(" ")[0];
-      if (selectedDays.includes("今天") && dataDate === today) return true;
-      if (selectedDays.includes("明天") && dataDate === tomorrow) return true;
-      if (selectedDays.includes("後天") && dataDate === dayAfterTomorrow) return true;
+      if (selectedDay === "今天" && dataDate === today) return true;
+      if (selectedDay === "明天" && dataDate === tomorrow) return true;
+      if (selectedDay === "後天" && dataDate === dayAfterTomorrow) return true;
       return false;
     });
   };
@@ -63,30 +58,23 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
 
   return (
     <div>
-      {/* Checkboxes for day selection */}
-      <div className="flex justify-center gap-4 mt-4">
-        <label className="flex items-center gap-2">
-          <Checkbox
-            checked={selectedDays.includes("今天")}
-            onCheckedChange={() => handleCheckboxChange("今天")}
-          />
-          <span>今天</span>
-        </label>
-        <label className="flex items-center gap-2">
-          <Checkbox
-            checked={selectedDays.includes("明天")}
-            onCheckedChange={() => handleCheckboxChange("明天")}
-          />
-          <span>明天</span>
-        </label>
-        <label className="flex items-center gap-2">
-          <Checkbox
-            checked={selectedDays.includes("後天")}
-            onCheckedChange={() => handleCheckboxChange("後天")}
-          />
-          <span>後天</span>
-        </label>
-      </div>
+      {/* Radio buttons for day selection */}
+      <RadioGroup defaultValue="今天" onValueChange={setSelectedDay}>
+        <div className="flex justify-center gap-4 mt-4">
+          <div className="flex items-center gap-2">
+            <RadioGroupItem value="今天" id="r1" />
+            <Label htmlFor="r1">今天</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <RadioGroupItem value="明天" id="r2" />
+            <Label htmlFor="r2">明天</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <RadioGroupItem value="後天" id="r3" />
+            <Label htmlFor="r3">後天</Label>
+          </div>
+        </div>
+      </RadioGroup>
 
       {/* Display weather data based on selection */}
       <div className="flex flex-wrap justify-center mt-4 p-4 gap-4">
