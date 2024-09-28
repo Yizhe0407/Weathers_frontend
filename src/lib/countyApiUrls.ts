@@ -45,3 +45,13 @@ export const countyWithTowns: { [key: string]: string[] } = {
   '花蓮縣': ['花蓮市', '鳳林鎮', '玉里鎮', '新城鄉', '吉安鄉', '壽豐鄉', '秀林鄉', '光復鄉', '豐濱鄉', '瑞穗鄉', '萬榮鄉', '富里鄉', '卓溪鄉'],
   '臺東縣': ['臺東市', '成功鎮', '關山鎮', '長濱鄉', '海端鄉', '池上鄉', '東河鄉', '鹿野鄉', '延平鄉', '卑南鄉', '金峰鄉', '大武鄉', '達仁鄉', '綠島鄉', '蘭嶼鄉', '太麻里鄉']
 };
+
+// 根據town找出對應的county
+export const getCountyByTown = (town: string): string | null => {
+  for (const [county, towns] of Object.entries(countyWithTowns)) {
+    if (towns.includes(town)) {
+      return county;
+    }
+  }
+  return null; 
+};

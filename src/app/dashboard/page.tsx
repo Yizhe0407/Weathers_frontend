@@ -14,26 +14,32 @@ import {
 import Choose from "@/components/Choose";
 import CountyTownItem from "@/components/CountyTownItem";
 
-interface County {
-    id: string;
-    county: string;
-    towns: string[];
+// API now returns an array of strings, so we update the ApiResponse type accordingly
+interface ApiResponse {
+    towns: string[]; // API returns an array of town strings
 }
 
 export default function Page() {
     const { user } = useUser();
     const { isSignedIn } = useAuth();
     const router = useRouter();
-    const [open, setOpen] = useState(false); // 控制Dialog的開關狀態
-    const [userCounties, setUserCounties] = useState<County[]>([]); // 明確指定 userCounties 的類型
-    const [loading, setLoading] = useState(true); // 狀態管理loading
+    const [open, setOpen] = useState(false);
+    const [userTowns, setUserTowns] = useState<string[]>([]); // State stores towns as strings now
+    const [loading, setLoading] = useState(true);
 
-    // 確保 user 存在後再取email
     const email = user?.emailAddresses?.[0]?.emailAddress;
 
-    // 使用 useCallback 來記住 fetchUserCounties，當 email 改變時，函數會被更新
-    const fetchUserCounties = useCallback(async () => {
+    const fetchUserTowns = useCallback(async () => {
         try {
+            // 檢查 localStorage 中是否有快取的數據
+            const cachedTowns = localStorage.getItem(email || "");
+            if (cachedTowns) {
+                setUserTowns(JSON.parse(cachedTowns));
+                setLoading(false);
+                return;
+            }
+
+            // 如果沒有快取的數據，則發送 API 請求
             const response = await fetch(`https://weathers-backend.vercel.app/api/data?email=${email}`, {
                 method: "GET",
                 headers: {
@@ -41,40 +47,47 @@ export default function Page() {
                 },
             });
             if (response.ok) {
-                const data: County[] = await response.json(); // 明確指定返回資料的類型為 County 陣列
-                console.log(data);
-                setUserCounties(data); // 保存到 state
+                const data: ApiResponse = await response.json();
+
+                // 更新狀態並將數據存入 localStorage
+                setUserTowns(data.towns);
+                localStorage.setItem(email || "", JSON.stringify(data.towns));
             } else {
-                console.error("Failed to fetch user counties");
+                console.error("Failed to fetch user towns");
             }
         } catch (error) {
-            console.error("Error fetching user counties:", error);
+            console.error("Error fetching user towns:", error);
         } finally {
-            setLoading(false); // 資料加載完成
+            setLoading(false);
         }
-    }, [email]); // email 作為 useCallback 的依賴項
+    }, [email]);
 
     useEffect(() => {
         if (!isSignedIn) {
-            router.push("/"); // 如果未通過驗證，跳轉到登入頁面
+            router.push("/");
         } else if (email) {
-            fetchUserCounties(); // 當用戶已登入並且 email 存在時，獲取 county 和 town 資料
+            fetchUserTowns();
         }
-    }, [isSignedIn, router, email, fetchUserCounties]); // 將 fetchUserCounties 添加到依賴數組
+    }, [isSignedIn, router, email, fetchUserTowns]);
 
     const handleDialogClose = () => {
-        setOpen(false); // 關閉 Dialog
-        fetchUserCounties(); // 每次關閉 Dialog 時重新獲取資料，更新顯示
+        setOpen(false);
+    
+        // 清除 localStorage 中的快取，強制更新數據
+        if (email) {
+            localStorage.removeItem(email); // 移除之前快取的數據
+        }
+    
+        fetchUserTowns(); // 重新從 API 獲取最新的數據
     };
 
     if (loading) {
-        return <div className="p-4 text-center text-2xl animate-pulse">Loading...</div>; // 在資料加載過程中顯示 Loading
+        return <div className="p-4 text-center text-2xl animate-pulse">Loading...</div>;
     }
 
-    // 使用 CountyTownItem 來渲染每個縣市和鄉鎮
     return (
         <div className="p-4 flex flex-col items-center justify-center">
-            <Dialog open={open} onOpenChange={setOpen}> {/* 控制 Dialog 的開關 */}
+            <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                     <Button variant="outline" className="bg-[#A79277] border-none text-white text-lg hover:bg-[#EAD8C0] w-full max-w-xl" onClick={() => setOpen(true)}>
                         新增
@@ -84,26 +97,18 @@ export default function Page() {
                     <DialogHeader>
                         <DialogTitle>選擇地區</DialogTitle>
                     </DialogHeader>
-                    <Choose onSuccess={handleDialogClose} /> {/* 將關閉 Dialog 的函數傳遞給 Choose 組件 */}
+                    <Choose onSuccess={handleDialogClose} />
                 </DialogContent>
             </Dialog>
 
-            {/* 使用 map 遍歷用戶的縣市和鄉鎮數據，分開顯示 */}
             <div className="mt-4 grid grid-cols gap-4 w-full max-w-xl">
-                {userCounties.map((county) => (
-                    county.towns.map((town) => (
-                        console.log(county.county, town, typeof town),
-                        <CountyTownItem
-                            key={`${county.county}-${town}`} // 使用 county 名称和 town 名称生成唯一的 key
-                            county={county.county}
-                            town={town} 
-                        />
-                    ))
+                {userTowns.map((town, index) => (
+                    <CountyTownItem
+                        key={`${town}-${index}`} // Ensure unique key by combining town name and index
+                        town={town} // Pass only the town string directly
+                    />
                 ))}
             </div>
-
-
-
         </div>
     );
 }

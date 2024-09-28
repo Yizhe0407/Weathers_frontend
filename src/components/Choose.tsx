@@ -36,7 +36,6 @@ export default function Choose({ onSuccess }: ChooseProps) {
         const userData = {
             username,
             email: user.emailAddresses[0].emailAddress,
-            county,
             town,
         };
 

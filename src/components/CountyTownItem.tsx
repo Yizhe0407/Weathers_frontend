@@ -2,23 +2,28 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { getCountyByTown } from "@/lib/countyApiUrls";
 
 interface CountyTownItemProps {
-    county: string;
     town: string;
 }
 
-export default function CountyTownItem({ county, town }: CountyTownItemProps) {
+export default function CountyTownItem({ town }: CountyTownItemProps) {
     const router = useRouter();
+    const county = getCountyByTown(town); // Get the county by town
 
     const handleClick = () => {
-        // 跳轉到新頁面，並將 county 和 town 作為路由參數傳遞
-        router.push(`/countyTown?county=${county}&town=${town}`);
+        if (county) {
+            // Navigate to the new page with county and town as parameters
+            router.push(`/countyTown?county=${county}&town=${town}`);
+        } else {
+            console.error(`County not found for town: ${town}`);
+        }
     };
 
     return (
-        <div onClick={handleClick} className=" bg-[#FFF2E1] border-none p-4 rounded-lg cursor-pointer text-center text-xl w-full max-w-xl">
-            <h3 className="font-semibold">{county}</h3>
+        <div onClick={handleClick} className="bg-[#FFF2E1] border-none p-4 rounded-lg cursor-pointer text-center text-xl w-full max-w-xl">
+            {county && <h3 className="font-semibold">{county}</h3>} {/* Display the county if found */}
             <p>{town}</p>
         </div>
     );
