@@ -63,8 +63,11 @@ export default function Page() {
 
     const handleDialogClose = () => {
         setOpen(false);
-
         fetchUserTowns(); // 重新從 API 獲取最新的數據
+    };
+
+    const handleTownDelete = (deletedTown: string) => {
+        setUserTowns((prevTowns) => prevTowns.filter((town) => town !== deletedTown));
     };
 
     if (loading) {
@@ -97,6 +100,7 @@ export default function Page() {
                     <CountyTownItem
                         key={`${town}-${index}`} // Ensure unique key by combining town name and index
                         town={town} // Pass only the town string directly
+                        onDelete={handleTownDelete}
                     />
                 ))}
             </div>
