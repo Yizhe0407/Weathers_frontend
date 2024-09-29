@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { getCountyByTown } from "@/lib/countyApiUrls";
 import { Trash2, MapPin, ChevronRight } from 'lucide-react';
@@ -14,6 +15,7 @@ interface CountyTownItemProps {
 
 export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) {
     const { user } = useUser();
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const county = getCountyByTown(town);
 
@@ -47,8 +49,18 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
         }
     };
 
+    const handleClick = () => {
+        if (county) {
+            // Navigate to the new page with county and town as parameters
+            router.push(`/countyTown?county=${county}&town=${town}`);
+        } else {
+            console.error(`County not found for town: ${town}`);
+        }
+    };
+
+
     return (
-        <div className="bg-[#FFF2E1] border-none p-4 rounded-lg cursor-pointer text-center text-xl w-full max-w-xl">
+        <div onClick={handleClick} className="bg-[#FFF2E1] border-none p-4 rounded-lg cursor-pointer text-center text-xl w-full max-w-xl">
             <div className="flex items-center justify-between">
                 <div className="flex items-center font-semibold">
                     <MapPin />
