@@ -1,11 +1,13 @@
 // components/CountyTownItem.tsx
 "use client";
+import { useState } from "react";
+import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { getCountyByTown } from "@/lib/countyApiUrls";
 import { Trash2, MapPin, ChevronRight } from 'lucide-react';
-
+//import LoadingGif from "@/public/images/loading.gif"; // Make sure to import your loading gif component
 
 interface CountyTownItemProps {
     town: string;
@@ -15,10 +17,12 @@ export default function CountyTownItem({ town }: CountyTownItemProps) {
     const { user } = useUser();
     const router = useRouter();
     const county = getCountyByTown(town); // Get the county by town
+    const [loading, setLoading] = useState(false); // State to track loading state
 
     if (!user) return null;
 
     const deletePlace = async () => {
+        setLoading(true); // Start loading
         const delInfo = {
             email: user.emailAddresses[0].emailAddress,
             town
@@ -34,13 +38,14 @@ export default function CountyTownItem({ town }: CountyTownItemProps) {
 
             if (response.ok) {
                 console.log(`${town} deleted successfully`);
-                localStorage.removeItem(user.emailAddresses[0].emailAddress);
                 router.refresh(); // 刷新當前頁面以反映刪除後的狀態
             } else {
                 console.error('Failed to delete town');
             }
         } catch (error) {
             console.error('Error deleting town:', error);
+        } finally {
+            setLoading(false); // Stop loading after the operation
         }
     };
 
@@ -69,8 +74,18 @@ export default function CountyTownItem({ town }: CountyTownItemProps) {
                         deletePlace(); // 執行刪除操作
                     }}
                     className="border-none px-2 hover:bg-[#ead8c0] hover:text-[#BA704F]"
+                    disabled={loading} // Disable button while loading
                 >
-                    <Trash2 />
+                    {loading ? (
+                        <Image
+                            src="/images/loading.gif" // Path to your GIF in the public folder
+                            alt="Loading..." // Meaningful text as it's conveying the state
+                            width={20} // You should set width and height for next/image
+                            height={20}
+                        />
+                    ) : (
+                        <Trash2 />
+                    )}
                 </Button>
             </div>
         </div>

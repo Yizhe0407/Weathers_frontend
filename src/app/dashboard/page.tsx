@@ -32,15 +32,6 @@ export default function Page() {
 
     const fetchUserTowns = useCallback(async () => {
         try {
-            // 檢查 localStorage 中是否有快取的數據
-            const cachedTowns = localStorage.getItem(email || "");
-            if (cachedTowns) {
-                setUserTowns(JSON.parse(cachedTowns));
-                setLoading(false);
-                return;
-            }
-
-            // 如果沒有快取的數據，則發送 API 請求
             const response = await fetch(`https://weathers-backend.vercel.app/api/data?email=${email}`, {
                 method: "GET",
                 headers: {
@@ -52,7 +43,6 @@ export default function Page() {
 
                 // 更新狀態並將數據存入 localStorage
                 setUserTowns(data.towns);
-                localStorage.setItem(email || "", JSON.stringify(data.towns));
             } else {
                 console.error("Failed to fetch user towns");
             }
@@ -73,11 +63,6 @@ export default function Page() {
 
     const handleDialogClose = () => {
         setOpen(false);
-
-        // 清除 localStorage 中的快取，強制更新數據
-        if (email) {
-            localStorage.removeItem(email); // 移除之前快取的數據
-        }
 
         fetchUserTowns(); // 重新從 API 獲取最新的數據
     };
