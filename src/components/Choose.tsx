@@ -99,7 +99,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
 
             <Button
                 variant="outline"
-                className="bg-[#A79277] hover:bg-[#EAD8C0] text-white border-none w-32"
+                className="bg-[#A79277] hover:bg-[#A79277] text-white border-none w-32"
                 onClick={handleClick}
                 disabled={loading}  // 當 loading 為 true 時按鈕無法點擊
             >
