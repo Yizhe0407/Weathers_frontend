@@ -62,7 +62,7 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
     return (
         <div onClick={handleClick} className="bg-[#FFF2E1] border-none p-4 rounded-lg cursor-pointer text-center text-xl w-full max-w-xl">
             <div className="flex items-center justify-between">
-                <div className="flex items-center font-bold">
+                <div className="flex items-center font-semibold">
                     <MapPin />
                     {county && <h3>　{county}</h3>}
                     <ChevronRight />
