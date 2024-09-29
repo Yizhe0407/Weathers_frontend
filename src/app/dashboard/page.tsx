@@ -1,4 +1,5 @@
 "use client";
+//import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@clerk/nextjs";
@@ -14,6 +15,7 @@ import {
 import { SquarePlus } from 'lucide-react';
 import Choose from "@/components/Choose";
 import CountyTownItem from "@/components/CountyTownItem";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 // API now returns an array of strings, so we update the ApiResponse type accordingly
 interface ApiResponse {
@@ -71,7 +73,13 @@ export default function Page() {
     };
 
     if (loading) {
-        return <div className="p-4 text-center text-2xl animate-pulse">Loading...</div>;
+        return (
+            <DotLottieReact
+                src="https://lottie.host/f23863ed-a21e-401f-90ba-8e428d26e5d4/k91uNUTgIt.json"
+                loop
+                autoplay
+            />
+        );
     }
 
     return (

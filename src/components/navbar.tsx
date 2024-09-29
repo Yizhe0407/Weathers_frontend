@@ -57,7 +57,7 @@ export default function Navbar() {
             <div>
                 <SignedOut>
                     <Button 
-                        className="bg-[#F5F5F5] text-black text-md" 
+                        className="bg-white text-[#ba704f] font-bold text-lg" 
                         variant="outline" 
                         size="lg"
                         onClick={() => openSignIn({ afterSignInUrl: "/dashboard" })}

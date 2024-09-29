@@ -7,6 +7,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 import { countyApiUrls, countyWithTowns } from "@/lib/countyApiUrls";
@@ -102,7 +103,15 @@ export default function Choose({ onSuccess }: ChooseProps) {
                 onClick={handleClick}
                 disabled={loading}  // 當 loading 為 true 時按鈕無法點擊
             >
-                {loading ? "Loading..." : "確認"}  
+                {loading ? (
+                    <Image
+                        src="/images/loading-level.gif"
+                        alt="Loading..."
+                        width={150}
+                        height={150}
+                    />
+                ) :
+                    "確定"}
             </Button>
         </div>
     );

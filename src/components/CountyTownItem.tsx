@@ -81,8 +81,8 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
                         <Image
                             src="/images/loading.gif"
                             alt="Loading..."
-                            width={20}
-                            height={20}
+                            width={25}
+                            height={25}
                         />
                     ) : (
                         <Trash2 />

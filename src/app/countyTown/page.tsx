@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { countyApiUrls } from "@/lib/countyApiUrls";
@@ -66,7 +67,16 @@ export default function CountyTownPage() {
 
     // Show loading spinner while fetching data
     if (loading) {
-        return <div className="p-4 text-center text-2xl animate-pulse">Loading...</div>;
+        return (
+            <div className="flex justify-center">
+                <Image
+                    src="/images/loading-level.gif"
+                    alt="Loading..."
+                    width={150}
+                    height={150}
+                />
+            </div>
+        );
     }
 
     // Render weather data after successful fetch
