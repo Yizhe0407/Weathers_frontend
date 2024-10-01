@@ -12,7 +12,6 @@ interface Props {
 }
 
 const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
-  // Default to "今天" being selected
   const [selectedDay, setSelectedDay] = useState<string>("今天");
 
   const formatWeatherData = (data: WeatherData) => {
@@ -76,7 +75,6 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
         </div>
       </RadioGroup>
 
-      {/* Display weather data based on selection */}
       <div className="flex flex-wrap justify-center mt-4 p-4 gap-4">
         {(!filteredWeatherData || filteredWeatherData.length === 0) ? (
           <p className="text-center mt-4">目前無天氣資料。</p>

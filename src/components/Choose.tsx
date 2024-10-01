@@ -13,25 +13,25 @@ import { useUser } from "@clerk/nextjs";
 import { countyApiUrls, countyWithTowns } from "@/lib/countyApiUrls";
 
 interface ChooseProps {
-    onSuccess: () => void; // 接收关闭Dialog的函数
+    onSuccess: () => void;
 }
 
 export default function Choose({ onSuccess }: ChooseProps) {
     const { user } = useUser();
     const [county, setCounty] = useState<string>("");
     const [town, setTown] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(false);  // 新增 loading 狀態
+    const [loading, setLoading] = useState<boolean>(false);
     const countyNames: string[] = Object.keys(countyApiUrls);
 
     const handleCountyChange = (county: string) => {
         setCounty(county);
-        setTown(""); // Reset town when county changes
+        setTown("");
     };
 
     if (!user) return null;
 
     const handleClick = async () => {
-        setLoading(true);  // 請求開始，設置 loading 為 true
+        setLoading(true);
         const username = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim();
 
         const userData = {
@@ -40,7 +40,6 @@ export default function Choose({ onSuccess }: ChooseProps) {
             town,
         };
 
-        // Send the data to the backend via a POST request
         try {
             const response = await fetch("https://weathers-backend.vercel.app/api/add", {
                 method: "POST",
@@ -59,7 +58,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
         } catch (error) {
             console.error("Error while saving data:", error);
         } finally {
-            setLoading(false);  // 請求完成，無論成功與否都將 loading 設置為 false
+            setLoading(false);
         }
     };
 
@@ -89,7 +88,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
                         <SelectContent>
                             {countyWithTowns[county]?.map((town) => (
                                 <SelectItem key={town} value={town}>
-                                    {town.split('_')[0]} {/* 顯示前三個字 */}
+                                    {town.split('_')[0]}
                                 </SelectItem>
                             ))}
                         </SelectContent>
@@ -102,7 +101,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
                 variant="outline"
                 className="bg-[#A79277] hover:bg-[#A79277] text-white border-none w-32"
                 onClick={handleClick}
-                disabled={loading}  // 當 loading 為 true 時按鈕無法點擊
+                disabled={loading}
             >
                 {loading ? (
                     <Image

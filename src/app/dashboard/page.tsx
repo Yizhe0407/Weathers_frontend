@@ -1,5 +1,4 @@
 "use client";
-//import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@clerk/nextjs";
@@ -17,9 +16,8 @@ import Choose from "@/components/Choose";
 import CountyTownItem from "@/components/CountyTownItem";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-// API now returns an array of strings, so we update the ApiResponse type accordingly
 interface ApiResponse {
-    towns: string[]; // API returns an array of town strings
+    towns: string[]; 
 }
 
 export default function Page() {
@@ -27,7 +25,7 @@ export default function Page() {
     const { isSignedIn } = useAuth();
     const router = useRouter();
     const [open, setOpen] = useState(false);
-    const [userTowns, setUserTowns] = useState<string[]>([]); // State stores towns as strings now
+    const [userTowns, setUserTowns] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
 
     const email = user?.emailAddresses?.[0]?.emailAddress;
@@ -43,7 +41,6 @@ export default function Page() {
             if (response.ok) {
                 const data: ApiResponse = await response.json();
 
-                // 更新狀態並將數據存入 localStorage
                 setUserTowns(data.towns);
             } else {
                 console.error("Failed to fetch user towns");
@@ -91,7 +88,7 @@ export default function Page() {
                         className="bg-[#A79277] border-none text-white text-lg hover:bg-[#EAD8C0] w-full max-w-xl flex justify-center items-center space-x-2" // 使用 space-x-2 調整圖示與文本間距
                         onClick={() => setOpen(true)}
                     >
-                        <SquarePlus /> {/* 去除 margin，讓 flex 控制間距 */}
+                        <SquarePlus /> 
                         <span>新增</span>
                     </Button>
                 </DialogTrigger>
@@ -106,8 +103,8 @@ export default function Page() {
             <div className="mt-4 grid grid-cols gap-4 w-full max-w-xl">
                 {userTowns.map((town, index) => (
                     <CountyTownItem
-                        key={`${town}-${index}`} // Ensure unique key by combining town name and index
-                        town={town} // Pass only the town string directly
+                        key={`${town}-${index}`} 
+                        town={town} 
                         onDelete={handleTownDelete}
                     />
                 ))}

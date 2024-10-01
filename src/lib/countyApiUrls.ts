@@ -1,6 +1,5 @@
 // app/lib/countyApiUrls.ts
 
-// API URLs for each county
 export const countyApiUrls: { [key: string]: string } = {
   '基隆市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-049',
   '臺北市': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-061',
@@ -23,7 +22,6 @@ export const countyApiUrls: { [key: string]: string } = {
   '臺東縣': 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-037'
 };
 
-// Towns for each county
 export const countyWithTowns: { [key: string]: string[] } = {
   '基隆市': ['中正區_KEL', '七堵區', '暖暖區', '仁愛區', '中山區_KEL', '安樂區', '信義區_KEL'],
   '臺北市': ['中正區_TPE', '大同區', '中山區_TPE', '萬華區', '信義區_TPE', '松山區', '大安區', '南港區', '北投區', '內湖區', '士林區', '文山區'],

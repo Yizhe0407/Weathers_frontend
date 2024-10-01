@@ -8,14 +8,14 @@ import {
     SignedIn,
     SignedOut,
     useClerk,
-    useUser,  // 使用 useUser 来获取用户信息
+    useUser,
     UserButton
 } from '@clerk/nextjs';
 
 export default function Navbar() {
-    const { isSignedIn } = useUser();  // 获取用户登录状态
-    const { openSignIn } = useClerk();  // Clerk的方法打开登录弹窗
-    const { user } = useUser();  // 获取用户的详细信息
+    const { isSignedIn } = useUser();
+    const { openSignIn } = useClerk();
+    const { user } = useUser();  
     const router = useRouter();
 
     useEffect(() => {
@@ -40,7 +40,6 @@ export default function Navbar() {
             }
         };
 
-        // 用户成功登录后跳转并创建用户
         if (isSignedIn && user) {
             router.push('/dashboard'); 
             const username = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim();
