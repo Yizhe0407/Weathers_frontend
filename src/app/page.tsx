@@ -40,6 +40,8 @@ export default function Page() {
 
     setLoading(true);
     setError("");
+    
+    setTown(town.slice(0, 3));
 
     try {
       const response = await fetch("https://weathers-backend.vercel.app/api/weather", {
@@ -99,7 +101,7 @@ export default function Page() {
               <SelectContent>
                 {countyWithTowns[county]?.map((town) => (
                   <SelectItem key={town} value={town}>
-                    {town}
+                    {town.slice(0, 3)}
                   </SelectItem>
                 ))}
               </SelectContent>

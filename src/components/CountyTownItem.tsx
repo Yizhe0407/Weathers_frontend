@@ -52,7 +52,7 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
     const handleClick = () => {
         if (county) {
             // Navigate to the new page with county and town as parameters
-            router.push(`/countyTown?county=${county}&town=${town}`);
+            router.push(`/countyTown?county=${county}&town=${town.slice(0, 3)}`);
         } else {
             console.error(`County not found for town: ${town}`);
         }
@@ -66,7 +66,7 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
                     <MapPin />
                     {county && <h3>　{county}</h3>}
                     <ChevronRight />
-                    <p>{town}</p>
+                    <p>{town.slice(0, 3)}</p>
                 </div>
                 <Button
                     variant="outline"
