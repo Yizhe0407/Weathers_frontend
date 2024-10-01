@@ -62,9 +62,8 @@ export default function Navbar() {
             <div>
                 <SignedOut>
                     <Button
-                        className={`bg-white text-[#ba704f] font-bold text-lg ${pacifico.className}`}
+                        className="bg-white text-[#ba704f] font-semibold"
                         variant="outline"
-                        size="lg"
                         onClick={() => openSignIn({ afterSignInUrl: "/dashboard" })}
                     >
                         登入
