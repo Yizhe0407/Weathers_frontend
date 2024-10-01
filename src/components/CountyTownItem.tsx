@@ -66,7 +66,7 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
                     <MapPin />
                     {county && <h3>　{county}</h3>}
                     <ChevronRight />
-                    <p>{town.slice(0, 3)}</p>
+                    <p>{town.split('_')[0]}</p>
                 </div>
                 <Button
                     variant="outline"
