@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Pacifico } from 'next/font/google';
 import { Button } from "@/components/ui/button";
 import {
     SignedIn,
@@ -12,10 +13,15 @@ import {
     UserButton
 } from '@clerk/nextjs';
 
+const pacifico = Pacifico({
+    weight: '400',
+    subsets: ['latin'],
+});
+
 export default function Navbar() {
     const { isSignedIn } = useUser();
     const { openSignIn } = useClerk();
-    const { user } = useUser();  
+    const { user } = useUser();
     const router = useRouter();
 
     useEffect(() => {
@@ -29,7 +35,7 @@ export default function Navbar() {
                     },
                     body: JSON.stringify({ username, email }),
                 });
-                
+
                 if (!response.ok) {
                     throw new Error('Failed to create user');
                 }
@@ -41,23 +47,23 @@ export default function Navbar() {
         };
 
         if (isSignedIn && user) {
-            router.push('/dashboard'); 
+            router.push('/dashboard');
             const username = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim();
-            const email = user.emailAddresses[0].emailAddress;  
-            createUser(username, email); 
+            const email = user.emailAddresses[0].emailAddress;
+            createUser(username, email);
         }
     }, [isSignedIn, user, router]);
 
     return (
         <div className='flex justify-between items-center w-full bg-[#A79277] py-2 px-8'>
-            <h1 className='text-2xl text-[#FFF2E1]'>
+            <h1 className={`text-2xl text-[#FFF2E1] ${pacifico.className}`}>
                 <Link href="/">SkyNet</Link>
             </h1>
             <div>
                 <SignedOut>
-                    <Button 
-                        className="bg-white text-[#ba704f] font-bold text-lg" 
-                        variant="outline" 
+                    <Button
+                        className={`bg-white text-[#ba704f] font-bold text-lg ${pacifico.className}`}
+                        variant="outline"
                         size="lg"
                         onClick={() => openSignIn({ afterSignInUrl: "/dashboard" })}
                     >
