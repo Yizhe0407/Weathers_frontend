@@ -89,7 +89,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
                         <SelectContent>
                             {countyWithTowns[county]?.map((town) => (
                                 <SelectItem key={town} value={town}>
-                                    {town.slice(0, 3)} {/* 顯示前三個字 */}
+                                    {town.split('_')[0]} {/* 顯示前三個字 */}
                                 </SelectItem>
                             ))}
                         </SelectContent>
