@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={inter.className} style={{ userSelect: 'none' }}>
           <Navbar />
           {children}
         </body>
