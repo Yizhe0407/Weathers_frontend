@@ -87,7 +87,7 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
               <div className="p-4 w-[325px] border bg-[#FFF2E1] border-none rounded-lg" key={data.startTime}>
                 <div className="flex flex-col flex-wrap gap-4">
                   <div className="flex justify-between">
-                    <p className="w-full">{`${date} ${time}`}</p>
+                    <p className="w-full">{`${date}　 ${time}`}</p>
                     <p className="w-full">{weather}</p>
                   </div>
                   <div className="flex justify-between">

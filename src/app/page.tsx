@@ -1,5 +1,6 @@
 // app/page.tsx
 "use client";
+import Image from "next/image";
 import React, { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -40,7 +41,7 @@ export default function Page() {
 
     setLoading(true);
     setError("");
-    
+
     setTown(town.split('_')[0]);
 
     try {
@@ -112,10 +113,18 @@ export default function Page() {
         <Button
           variant="outline"
           onClick={fetchWeather}
-          className="bg-[#A79277] hover:bg-[#EAD8C0] text-white border-none px-3 py-2 rounded w-[325px] md:w-32"
+          className="bg-[#A79277] hover:bg-[#A79277] text-white border-none px-3 py-2 rounded w-[325px] md:w-32"
           disabled={loading}
         >
-          {loading ? "Loading..." : "確定"}
+          {loading ? (
+            <Image
+              src="/images/loading-level.gif"
+              alt="Loading..."
+              width={120}
+              height={120}
+            />
+          ) :
+            "確定"}
         </Button>
       </div>
 
