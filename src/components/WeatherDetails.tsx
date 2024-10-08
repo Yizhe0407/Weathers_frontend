@@ -1,3 +1,4 @@
+import { Sun, MoonStar, CloudSun, CloudMoon, CloudRain, Cloud, CloudRainWind } from 'lucide-react';
 import React, { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -14,7 +15,25 @@ interface Props {
 const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
   const [selectedDay, setSelectedDay] = useState<string>("今天");
 
+  const getDayOfWeek = (dateString: string) => {
+    const daysOfWeek = ["日", "一", "二", "三", "四", "五", "六"];
+    const date = new Date(dateString);
+    return daysOfWeek[date.getDay()];
+  };
+
   const formatWeatherData = (data: WeatherData) => {
+    if (!data.startTime || !data.value) {
+      return {
+        date: "N/A",
+        time: "N/A",
+        weather: "N/A",
+        rainPercent: "N/A",
+        temperature: "N/A",
+        comfort: "N/A",
+        windDirection: "N/A",
+      };
+    }
+
     const [date, timeWithSeconds] = data.startTime.split(" ");
     const time = timeWithSeconds.slice(0, 5);
     const [weather, rainChance, temp, comfort, wind] = data.value.split("。");
@@ -22,8 +41,10 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
     const temperature = temp?.match(/\d+/)?.[0] || "N/A";
     const windDirection = wind?.match(/^[\u4e00-\u9fa5]+風/)?.[0] || "N/A";
 
+    const dayOfWeek = getDayOfWeek(date);
+
     return {
-      date: date.split("-").slice(1).join("/"),
+      date: `${date.split("-").slice(1).join("/")} (${dayOfWeek})`,
       time,
       weather,
       rainPercent,
@@ -53,11 +74,25 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
     });
   };
 
+  const isDayTime = (time: string) => {
+    const hour = parseInt(time.split(":")[0], 10);
+    return hour >= 6 && hour <= 15;
+  };
+
+  const getWeatherIcon = (weather: string, time: string) => {
+    const dayTime = isDayTime(time);
+
+    if (weather.includes("晴")) return dayTime ? <Sun /> : <MoonStar />;
+    if (weather.includes("多雲")) return dayTime ? <CloudSun /> : <CloudMoon />;
+    if (weather.includes("陰")) return <Cloud />;
+    if (weather.includes("午後短暫雷陣雨")) return <CloudRainWind />;
+    if (weather.includes("短暫陣雨") || weather.includes("短暫雨") || weather.includes("陣雨")) return <CloudRain />;
+  };
+
   const filteredWeatherData = filterWeatherData();
 
   return (
     <div>
-      {/* Radio buttons for day selection */}
       <RadioGroup defaultValue="今天" onValueChange={setSelectedDay}>
         <div className="flex justify-center gap-4 mt-4">
           <div className="flex items-center gap-2">
@@ -86,9 +121,15 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
             return (
               <div className="p-4 w-[325px] border bg-[#FFF2E1] border-none rounded-lg" key={data.startTime}>
                 <div className="flex flex-col flex-wrap gap-4">
-                  <div className="flex justify-between">
-                    <p className="w-full">{`${date}　 ${time}`}</p>
-                    <p className="w-full">{weather}</p>
+                  <div className="flex justify-between items-center">
+                    <div className="w-full h-full flex gap-6 items-center">
+                      <div className="flex flex-col">
+                        <p className="w-full">{`${date}`}</p>
+                        <p className="w-full">{`${time}`}</p>
+                      </div>
+                      {getWeatherIcon(weather, time)}
+                    </div>
+                    <p className="w-full bg-[#d1bb9e] px-4 py-1 rounded-lg text-white text-bold">{weather}</p>
                   </div>
                   <div className="flex justify-between">
                     <div className="flex w-full">
@@ -119,5 +160,4 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
     </div>
   );
 };
-
 export default WeatherDetails;
