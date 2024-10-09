@@ -25,7 +25,6 @@ export default function Navbar() {
     const router = useRouter();
 
     useEffect(() => {
-        // 登录后调用 createUser API
         const createUser = async (username: string, email: string) => {
             try {
                 const response = await fetch('https://weathers-backend.vercel.app/api/createUser', {
