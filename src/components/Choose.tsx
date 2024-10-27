@@ -19,7 +19,7 @@ interface ChooseProps {
 export default function Choose({ onSuccess }: ChooseProps) {
     const { user } = useUser();
     const [county, setCounty] = useState<string>("");
-    const [town, setTown] = useState<string>("");
+    const [towns, setTown] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const countyNames: string[] = Object.keys(countyApiUrls);
 
@@ -37,7 +37,7 @@ export default function Choose({ onSuccess }: ChooseProps) {
         const userData = {
             username,
             email: user.emailAddresses[0].emailAddress,
-            town,
+            towns,
         };
 
         try {

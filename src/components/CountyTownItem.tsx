@@ -28,8 +28,8 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
             town
         };
         try {
-            const response = await fetch('https://weathers-backend.vercel.app/api/deleteTown', {
-                method: 'DELETE',
+            const response = await fetch('https://weathers-backend.vercel.app/api/del', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
