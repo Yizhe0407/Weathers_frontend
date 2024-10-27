@@ -27,6 +27,7 @@ export default function Page() {
     const fetchUserTowns = useCallback(async () => {
         try {
             const response = await fetch(`https://weathers-backend.vercel.app/api/data/${email}`, {
+                mode: 'no-cors',
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
