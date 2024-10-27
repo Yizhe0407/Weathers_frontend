@@ -26,8 +26,7 @@ export default function Page() {
 
     const fetchUserTowns = useCallback(async () => {
         try {
-            const response = await fetch(`https://weathers-backend.vercel.app/api/data/${email}`, {
-                mode: 'no-cors',
+            const response = await fetch(`https://weathers-backend.vercel.app/api/data/${email}`, {               
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -35,6 +34,7 @@ export default function Page() {
             });
             if (response.ok) {
                 const data = await response.json();
+                console.log(data);
                 const townNames = data.map((item: { town: string }) => item.town); // 提取 town 字段
                 setTowns(townNames);
             } else {
