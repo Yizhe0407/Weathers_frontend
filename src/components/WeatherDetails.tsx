@@ -112,7 +112,7 @@ const WeatherDetails: React.FC<Props> = ({ weatherData }) => {
 
       <div className="flex flex-wrap justify-center mt-4 p-4 gap-4">
         {(!filteredWeatherData || filteredWeatherData.length === 0) ? (
-          <p className="text-center mt-4">目前無天氣資料。</p>
+          <p className="text-center mt-4">目前無天氣資料</p>
         ) : (
           filteredWeatherData.map((data) => {
             const { date, time, weather, rainPercent, temperature, comfort, windDirection } =

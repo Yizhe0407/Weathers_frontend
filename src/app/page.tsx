@@ -33,7 +33,7 @@ export default function Page() {
 
   const fetchWeather = async () => {
     if (!county || !town) {
-      alert("請選擇縣市和鄉鎮。");
+      alert("請選擇縣市和鄉鎮");
       return;
     }
 
