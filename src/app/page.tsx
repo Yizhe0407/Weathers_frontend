@@ -23,28 +23,30 @@ export default function Page() {
   })
 
   return (
-    <div className="flex flex-col justify-center p-4 h-full">
-      <h1 className="text-4xl font-bold p-2">歡迎來到 SkyNet</h1>
-      <h2 className="text-xl font-bold p-2">登入或註冊來建立屬於自己天氣清單</h2>
-      <div className='p-2'>
-        <SignedOut>
-          <Button
-            className="bg-[#ba704f] text-white font-semibold border-none"
-            variant="outline"
-            onClick={() => openSignIn({ afterSignInUrl: "/dashboard" })}
-          >
-            開始使用
-          </Button>
-        </SignedOut>
-        <SignedIn>
-          <UserButton
-            appearance={{
-              elements: {
-                userButtonAvatarBox: 'w-8 h-8',
-              },
-            }}
-          />
-        </SignedIn>
+    <div className="flex p-8 h-full justify-start lg:justify-center">
+      <div className='flex flex-col'>
+        <h1 className="text-4xl font-bold p-2">歡迎來到 SkyNet</h1>
+        <h2 className="text-xl font-bold p-2">登入或註冊來建立屬於自己的天氣清單</h2>
+        <div className='p-2'>
+          <SignedOut>
+            <Button
+              className="bg-[#ba704f] text-white font-semibold border-none"
+              variant="outline"
+              onClick={() => openSignIn({ afterSignInUrl: "/dashboard" })}
+            >
+              開始使用
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: {
+                  userButtonAvatarBox: 'w-8 h-8',
+                },
+              }}
+            />
+          </SignedIn>
+        </div>
       </div>
     </div>
   );
