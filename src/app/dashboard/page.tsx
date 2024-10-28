@@ -91,7 +91,7 @@ export default function Page() {
                 {loading ? (
                     // Display skeletons while loading
                     Array.from({ length: 3 }).map((_, idx) => (
-                        <Skeleton key={idx} className="h-[72px] w-full max-w-xl rounded-xl" />
+                        <Skeleton key={idx} className="h-[72px] w-full max-w-xl rounded-xl bg-[#fff2e1]" />
                     ))
                 ) : (
                     // Display town items once loaded
