@@ -1,5 +1,4 @@
 "use client";
-import React, { useState } from "react";
 import {
     Select,
     SelectContent,
@@ -8,8 +7,9 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { countyApiUrls, countyWithTowns } from "@/lib/countyApiUrls";
 
 interface ChooseProps {
@@ -95,7 +95,6 @@ export default function Choose({ onSuccess }: ChooseProps) {
                     )}
                 </Select>
             </div>
-
 
             <Button
                 variant="outline"

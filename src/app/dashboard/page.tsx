@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { SquarePlus } from 'lucide-react';
 import Choose from "@/components/Choose";
+import { Skeleton } from "@/components/ui/skeleton";
 import CountyTownItem from "@/components/CountyTownItem";
 
 export default function Page() {
@@ -21,12 +22,14 @@ export default function Page() {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [towns, setTowns] = useState<string[]>([]);
+    const [loading, setLoading] = useState(true); // Track loading state
 
     const email = user?.emailAddresses?.[0]?.emailAddress;
 
     const fetchUserTowns = useCallback(async () => {
+        setLoading(true); // Start loading
         try {
-            const response = await fetch(`https://weathers-backend.vercel.app/api/data/${email}`, {               
+            const response = await fetch(`https://weathers-backend.vercel.app/api/data/${email}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -34,13 +37,15 @@ export default function Page() {
             });
             if (response.ok) {
                 const data = await response.json();
-                const townNames = data.map((item: { town: string }) => item.town); // 提取 town 字段
+                const townNames = data.map((item: { town: string }) => item.town);
                 setTowns(townNames);
             } else {
                 console.error("Failed to fetch user towns");
             }
         } catch (error) {
             console.error("Error fetching user towns:", error);
+        } finally {
+            setLoading(false); // End loading
         }
     }, [email]);
 
@@ -54,7 +59,7 @@ export default function Page() {
 
     const handleDialogClose = () => {
         setOpen(false);
-        fetchUserTowns(); // 重新從 API 獲取最新的數據
+        fetchUserTowns(); // Refresh data
     };
 
     const handleTownDelete = (deletedTown: string) => {
@@ -67,10 +72,10 @@ export default function Page() {
                 <DialogTrigger asChild>
                     <Button
                         variant="outline"
-                        className="bg-[#A79277] border-none text-white text-lg hover:bg-[#EAD8C0] w-full max-w-xl flex justify-center items-center space-x-2" // 使用 space-x-2 調整圖示與文本間距
+                        className="bg-[#A79277] border-none text-white text-lg hover:bg-[#EAD8C0] w-full max-w-xl flex justify-center items-center space-x-2"
                         onClick={() => setOpen(true)}
                     >
-                        <SquarePlus /> 
+                        <SquarePlus />
                         <span>新增</span>
                     </Button>
                 </DialogTrigger>
@@ -83,13 +88,21 @@ export default function Page() {
             </Dialog>
 
             <div className="mt-4 grid grid-cols gap-4 w-full max-w-xl">
-                {towns.map((town, index) => (
-                    <CountyTownItem
-                        key={`${town}-${index}`} 
-                        town={town} 
-                        onDelete={handleTownDelete}
-                    />
-                ))}
+                {loading ? (
+                    // Display skeletons while loading
+                    Array.from({ length: 3 }).map((_, idx) => (
+                        <Skeleton key={idx} className="h-[72px] w-full max-w-xl rounded-xl" />
+                    ))
+                ) : (
+                    // Display town items once loaded
+                    towns.map((town, index) => (
+                        <CountyTownItem
+                            key={`${town}-${index}`}
+                            town={town}
+                            onDelete={handleTownDelete}
+                        />
+                    ))
+                )}
             </div>
         </div>
     );

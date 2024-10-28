@@ -23,9 +23,9 @@ export default function Page() {
   })
 
   return (
-    <div className="flex flex-col items-center p-4 h-screen justify-center">
-      <h1 className="text-4xl p-2">歡迎來到 SkyNet</h1>
-      <h2 className="text-xl p-2">登入或註冊來建立屬於自己天氣清單</h2>
+    <div className="flex flex-col justify-center p-4 h-full">
+      <h1 className="text-4xl font-bold p-2">歡迎來到 SkyNet</h1>
+      <h2 className="text-xl font-bold p-2">登入或註冊來建立屬於自己天氣清單</h2>
       <div className='p-2'>
         <SignedOut>
           <Button

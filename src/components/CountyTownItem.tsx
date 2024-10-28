@@ -51,13 +51,11 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
 
     const handleClick = () => {
         if (county) {
-            // Navigate to the new page with county and town as parameters
             router.push(`/countyTown?county=${county}&town=${town.split('_')[0]}`);
         } else {
             console.error(`County not found for town: ${town}`);
         }
     };
-
 
     return (
         <div onClick={handleClick} className="bg-[#FFF2E1] shadow shadow-[#a79277] hover:shadow-lg border-none p-4 rounded-lg cursor-pointer text-center text-xl w-full max-w-xl">
