@@ -18,6 +18,13 @@ import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
 
+import { Noto_Sans_TC } from 'next/font/google';
+
+const notoSansTC = Noto_Sans_TC({
+  weight: '400',
+  preload: false,
+})
+
 export default function Page() {
   const router = useRouter();
   const { isSignedIn } = useAuth();
@@ -30,12 +37,10 @@ export default function Page() {
     if (isSignedIn) {
       router.push("/dashboard");
     }
-  })
+  }, [isSignedIn, router]);
 
   React.useEffect(() => {
-    if (!api) {
-      return
-    }
+    if (!api) return;
 
     setCount(api.scrollSnapList().length)
     setCurrent(api.selectedScrollSnap() + 1)
@@ -46,16 +51,16 @@ export default function Page() {
   }, [api])
 
   return (
-    <div className="flex p-8 h-full justify-center flex-col md:flex-row max-w-5xl mx-auto">
+    <div className={`${notoSansTC.className} flex px-4 h-full justify-center flex-col md:flex-row max-w-5xl mx-auto`}>
       <div className='flex flex-col pt-8 max-w-3xl mx-auto'>
         <h1 className="text-4xl font-bold p-2">SkyNet－為您打造個性化的天氣清單</h1>
-        <p className="text-lg p-2">
+        <p className="text-xl sm:text-2xl p-2">
           在 SkyNet，您可以客製化個人的天氣清單，輕鬆掌握您關注地區的最新天氣動態。無論是日常生活還是旅行計劃，我們的精準氣象資訊，讓您隨時做好萬全準備！
         </p>
         <div className='p-2'>
           <SignedOut>
             <Button
-              className="bg-[#ba704f] text-white font-semibold border-none"
+              className="bg-[#ba704f] hover:bg-[#C47F5E] text-white hover:text-white border-none"
               variant="outline"
               onClick={() => openSignIn({ afterSignInUrl: "/dashboard" })}
             >

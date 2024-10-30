@@ -72,7 +72,7 @@ export default function Page() {
                 <DialogTrigger asChild>
                     <Button
                         variant="outline"
-                        className="bg-[#A79277] border-none text-white text-lg hover:bg-[#EAD8C0] w-full max-w-xl flex justify-center items-center space-x-2"
+                        className="bg-[#A79277] hover:bg-[#B8A28B] border-none text-white hover:text-white text-lg w-full max-w-xl flex justify-center items-center space-x-2"
                         onClick={() => setOpen(true)}
                     >
                         <SquarePlus />
@@ -81,7 +81,7 @@ export default function Page() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] w-64 bg-[#D1BB9E] border-none rounded-lg" style={{ top: '35%' }}>
                     <DialogHeader>
-                        <DialogTitle>選擇地區</DialogTitle>
+                        <DialogTitle className="text-center">選擇地區</DialogTitle>
                     </DialogHeader>
                     <Choose onSuccess={handleDialogClose} />
                 </DialogContent>

@@ -58,7 +58,7 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
     };
 
     return (
-        <div onClick={handleClick} className="bg-[#FFF2E1] shadow shadow-[#a79277] hover:shadow-lg border-none p-4 rounded-lg cursor-pointer text-center text-xl w-full max-w-xl">
+        <div onClick={handleClick} className="bg-[#FFF2E1] hover:bg-[#F0E0C9] shadow border-none p-4 rounded-lg cursor-pointer text-center text-xl w-full max-w-xl">
             <div className="flex items-center justify-between">
                 <div className="flex items-center font-semibold">
                     <MapPin />
@@ -72,7 +72,7 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
                         e.stopPropagation();
                         deletePlace();
                     }}
-                    className="border-none px-2 hover:bg-[#ead8c0] hover:text-[#BA704F]"
+                    className="border-none px-2 hover:bg-[#D2BEA8] hover:text-[#BA704F]"
                     disabled={loading}
                 >
                     {loading ? (
@@ -83,7 +83,7 @@ export default function CountyTownItem({ town, onDelete }: CountyTownItemProps) 
                             height={25}
                         />
                     ) : (
-                        <Trash2 />
+                        <Trash2 style={{ width: '22px', height: '22px' }} />
                     )}
                 </Button>
             </div>
